@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; // Required when using Event data.
 
 public class BrickCard : MonoBehaviour
 {
     [Header("UI Elements")]
+    [SerializeField]
+    private Image background;
     [SerializeField]
     private TextMeshProUGUI titleText;
     [SerializeField]
@@ -19,30 +20,96 @@ public class BrickCard : MonoBehaviour
     [SerializeField]
     private CardData data;
 
+    public CardData Data
+    {
+        get => data;
+    }
+
+    public bool CanBeUse
+    {
+        get => canBeUse;
+    }
+
     [Header("Interaction Color")]
     [SerializeField]
-    private Color DefaultColor;
+    private Color defaultColor;
+    [SerializeField]
+    private Color highLightColor;
+    [SerializeField]
+    private Color selectColor;
+    [SerializeField]
+    private Color disableColor;
+
+    private bool canBeUse = true;
+    private bool isSelected = false;
+
 
     private void Start()
     {
+
+    }
+
+    public void InitializeCard(CardData newData)
+    {
+        data = newData;
         titleText.text = data.Title;
         thumbnailImage.sprite = data.Thumbnail;
         costText.text = data.Cost.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HoldCard()
     {
-        
+        if (!PlayerController.Instance.IsHolding && canBeUse)
+        {
+            PlayerController.Instance.HoldCard(this);
+            SelectCard(true);
+        }
     }
 
-    public void PointerClick()
+    public void SelectCard(bool shoudBeSelected)
     {
-        Debug.Log("hey");
-        //PlayerController.Instance;
-        if (!PlayerController.Instance.IsHolding)
+        if (shoudBeSelected)
         {
-            PlayerController.Instance.HoldCard(data);
+            background.color = selectColor;
+            this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+        }
+        else
+        {
+            background.color = defaultColor;
+            this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+
+        isSelected = shoudBeSelected;
+    }
+
+    public void HighlightCard(bool shouldBeHighlight)
+    {
+        if (isSelected || !canBeUse || PlayerController.Instance.IsHolding)
+            return;
+
+        if (shouldBeHighlight)
+        {
+            background.color = highLightColor;
+            this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+        }
+        else 
+        {
+            background.color = defaultColor;
+            this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+    }
+
+    public void DisableCard(bool shouldBeDisabled)
+    {
+        canBeUse = !shouldBeDisabled;
+
+        if (shouldBeDisabled)
+        {
+            background.color = disableColor;
+        }
+        else
+        {
+            background.color = defaultColor;
         }
     }
 

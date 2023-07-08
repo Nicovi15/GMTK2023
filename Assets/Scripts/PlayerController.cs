@@ -4,48 +4,59 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController Instance;
-
-    private bool isHolding;
-
-    private GameObject projectionPrefab;
-    private GameObject brickPrefab;
-    Ray ray;
-    Plane plane = new Plane(Vector3.up, 0);
-
-    private GameObject currentProjection;
-
-    public LayerMask GridLayer;
+    private static PlayerController instance;
+    public static PlayerController Instance
+    {
+        get => instance;
+    }
 
     public bool IsHolding
     {
         get => isHolding;
     }
 
+    public int Ressource
+    {
+        get => ressource;
+        set => ressource = value; 
+    }
+    
+    [Header("Grid Layermask")]
+    [SerializeField]
+    private LayerMask GridLayer;
+    private bool isHolding;
+    public int ressource = 0;
+    private BrickCard selectedCard;
+    private GameObject currentProjection;
+
+
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        if (instance == null)
+            instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+
+        Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitData2;
+        if (Physics.Raycast(ray2, out hitData2, 1000, GridLayer))
+        {
+            Debug.Log(hitData2.point);
+            Debug.Log(Grid.Instance.GetSnapPosition(hitData2.point));
+        }
+
+
         if (isHolding)
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitData;
             if (Physics.Raycast(ray, out hitData, 1000, GridLayer))
             {
                 Debug.Log(hitData.point);
                 if (currentProjection == null)
-                    currentProjection = Instantiate(projectionPrefab);
+                    currentProjection = Instantiate(selectedCard.Data.ProjectionPrefab);
 
                 currentProjection.transform.position = Grid.Instance.GetSnapPosition(hitData.point);
             }
@@ -57,27 +68,30 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log("up");
-                if(currentProjection != null)
+                selectedCard.SelectCard(false);
+
+                if (currentProjection != null)
                 {
-                    GameObject newBrick = Instantiate(brickPrefab);
+                    GameObject newBrick = Instantiate(selectedCard.Data.BrickPrefab);
                     newBrick.transform.position = currentProjection.transform.position;
                     newBrick.transform.rotation = currentProjection.transform.rotation;
                     newBrick.transform.localScale = currentProjection.transform.localScale;
 
                     Destroy(currentProjection);
+                    ressource -= selectedCard.Data.Cost;
+                    Hand.Instance.UpdateCards();
                 }
-
+                
+                selectedCard = null;
                 isHolding = false;
             }
         }
     }
 
-    public void HoldCard(CardData data)
+    public void HoldCard(BrickCard card)
     {
         isHolding = true;
-        projectionPrefab = data.ProjectionPrefab;
-        brickPrefab = data.BrickPrefab;
+        selectedCard = card;
     }
 
 }

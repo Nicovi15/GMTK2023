@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.75, b: 0.75, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.35, g: 0.525, b: 0.7, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -383,10 +383,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360afae45297d5d4ca0b86f875a5dff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 6194283272327175428}
   titleText: {fileID: 9043814255035252118}
   thumbnailImage: {fileID: 6083434555216029429}
   costText: {fileID: 5536765486157962617}
   data: {fileID: 11400000, guid: feb211c66ac2abd4bbf7e8060bda92ec, type: 2}
+  defaultColor: {r: 0.34901962, g: 0.5254902, b: 0.69803923, a: 1}
+  highLightColor: {r: 0.5, g: 0.75280905, b: 1, a: 1}
+  selectColor: {r: 1, g: 0.9169935, b: 0.5019608, a: 1}
+  disableColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &5648291413449642631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +411,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5571864461266075155}
           m_TargetAssemblyTypeName: BrickCard, Assembly-CSharp
-          m_MethodName: PointerClick
+          m_MethodName: HoldCard
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -422,15 +427,15 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5571864461266075155}
           m_TargetAssemblyTypeName: BrickCard, Assembly-CSharp
-          m_MethodName: PointerClick
-          m_Mode: 1
+          m_MethodName: HighlightCard
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
   - eventID: 1
     callback:
@@ -438,8 +443,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 5571864461266075155}
           m_TargetAssemblyTypeName: BrickCard, Assembly-CSharp
-          m_MethodName: PointerClick
-          m_Mode: 1
+          m_MethodName: HighlightCard
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

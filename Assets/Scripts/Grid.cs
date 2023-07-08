@@ -26,4 +26,9 @@ public class Grid : MonoBehaviour
         Vector3 halfCellOffset = new Vector3(cellSize, 0, cellSize) / 2.0f;
         return gridPosition * cellSize + halfCellOffset;
     }
+
+    public Vector3 GetHalfCellOffset()
+    {
+        return new Vector3(cellSize, 0, cellSize) / 2.0f;
+    }
 }
