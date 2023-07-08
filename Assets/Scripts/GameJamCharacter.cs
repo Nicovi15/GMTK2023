@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameJamCharacter : MonoBehaviour
 {
-    public Vector3 direction = new Vector3(0, 0, 1);
+    public Vector3 baseDirection = new Vector3(0, 0, 1);
     [Range(0f, 30f)] public float speed = 1f;
     [Range(0f, 30f)] public float maxSpeed = 20f;
     
@@ -16,12 +16,12 @@ public class GameJamCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         // Constant movement without ignoring gravity force
-        rigidbody.velocity = direction.normalized * speed + new Vector3(0f, rigidbody.velocity.y, 0f);
+        rigidbody.velocity = baseDirection.normalized * speed + new Vector3(0f, rigidbody.velocity.y, 0f);
     }
 
     public void ChangeDirection(in Vector3 newDirection)
     {
-        direction = newDirection;
+        baseDirection = newDirection;
     }
 
     public void IncreaseSpeed(float addedSpeed)

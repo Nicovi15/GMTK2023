@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c093c06bf7ad1e4d8ee5b1c356d2f05, type: 3}
-  m_Name: CardData 1
+  m_Name: SO_Booster
   m_EditorClassIdentifier: 
-  Title: Cube
-  Cost: 36
+  Title: Booster
+  Cost: 1
   Thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   ProjectionPrefab: {fileID: 7905350725242972956, guid: c378644131045864781ddd034a5e7a14,
     type: 3}
-  BrickPrefab: {fileID: 3391326986287812006, guid: b7ac5539d66688e49bea9a7217ed9547,
+  BrickPrefab: {fileID: 2045683054926009777, guid: c52de4cc4d83b094eb7d3c5e2959fe71,
     type: 3}

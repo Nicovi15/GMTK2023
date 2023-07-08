@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c093c06bf7ad1e4d8ee5b1c356d2f05, type: 3}
-  m_Name: CardData
+  m_Name: SO_Arrow
   m_EditorClassIdentifier: 
-  Title: Cube
+  Title: Arrow
   Cost: 1
   Thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   ProjectionPrefab: {fileID: 7905350725242972956, guid: c378644131045864781ddd034a5e7a14,
     type: 3}
-  BrickPrefab: {fileID: 3391326986287812006, guid: b7ac5539d66688e49bea9a7217ed9547,
+  BrickPrefab: {fileID: 5211597141526136574, guid: 7ddf7972d4afeec46b53a27541bf7e98,
     type: 3}

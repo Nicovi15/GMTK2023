@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpeedBoost : MonoBehaviour, IInteractable
+public class SpeedBooster : MonoBehaviour, IInteractable
 {
     [Range(0f, 10f)] public float addedSpeed;
     
