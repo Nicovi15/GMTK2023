@@ -5,10 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    public static GameManager Instance
-    {
-        get => instance;
-    }
+    public static GameManager Instance => instance;
+    public LevelManager CurrentLevel => currentLevel;
 
     LevelManager currentLevel;
 

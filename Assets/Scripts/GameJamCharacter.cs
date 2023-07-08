@@ -13,10 +13,12 @@ public class GameJamCharacter : MonoBehaviour
     public Action OnDeath;
 
     private Rigidbody rigidbody;
+    // private Collider[] _colliders;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        // _colliders = GetComponents<Collider>();
     }
 
     private void FixedUpdate()
@@ -46,11 +48,17 @@ public class GameJamCharacter : MonoBehaviour
         rigidbody.angularVelocity = Vector3.zero;
         rigidbody.velocity = Vector3.zero;
         enabled = false;
+
+        // foreach (var currentCollider in _colliders)
+        //     currentCollider.enabled = false;
     }
 
     public void Resume()
     {
         enabled = true;
+
+        // foreach (var currentCollider in _colliders)
+        //     currentCollider.enabled = true;
     }
 
     private void OnCollisionEnter(Collision col)
