@@ -31,9 +31,9 @@ public class Grid : MonoBehaviour
         var halfOffset = GetHalfCellOffset();
         
         // Signed in the same direction than the grid coordinate
-        var signedHalfOffset = new Vector3(halfOffset.x * Mathf.Sign(gridCoordinate.x), 
+        var signedHalfOffset = new Vector3(halfOffset.x * Mathf.Sign(rawPosition.x), 
                                             0f,
-                                            halfOffset.z * Mathf.Sign(gridCoordinate.y));
+                                            halfOffset.z * Mathf.Sign(rawPosition.z));
         
         return new Vector3(gridCoordinate.x, rawPosition.y, gridCoordinate.y) * cellSize + signedHalfOffset;
     }
