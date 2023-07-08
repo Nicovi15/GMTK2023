@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
                 if (currentProjection == null)
                     currentProjection = Instantiate(projectionPrefab);
 
-                currentProjection.transform.position = hitData.point;
+                currentProjection.transform.position = Grid.Instance.GetSnapPosition(hitData.point);
             }
             else
             {
