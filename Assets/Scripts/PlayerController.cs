@@ -38,23 +38,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
-        Ray ray2 = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitData2;
-        if (Physics.Raycast(ray2, out hitData2, 1000, GridLayer))
-        {
-            Debug.Log(hitData2.point);
-            Debug.Log(Grid.Instance.GetSnapPosition(hitData2.point));
-        }
-
-
         if (isHolding)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitData;
             if (Physics.Raycast(ray, out hitData, 1000, GridLayer))
             {
-                Debug.Log(hitData.point);
                 if (currentProjection == null)
                     currentProjection = Instantiate(selectedCard.Data.ProjectionPrefab);
 

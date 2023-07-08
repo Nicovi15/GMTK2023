@@ -35,7 +35,7 @@ public class Hand : MonoBehaviour
         for (int i = 0; i < cardDatas.Count; i++)
         {
             GameObject newCard = Instantiate(brickCardPrefab);
-            newCard.transform.parent = transform;
+            newCard.transform.SetParent(transform);
             RectTransform rt = newCard.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(initialX, 0);
             initialX += deltaX;

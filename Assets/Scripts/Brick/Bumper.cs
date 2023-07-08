@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Bumper : MonoBehaviour, IInteractable
+public class Bumper : MonoBehaviour, IEffector
 {
     [SerializeField] [Range(0f, 20f)] float force;
 
-    public void Interact(in GameJamCharacter player)
+    public void ApplyEffectOn(in GameJamCharacter player)
     {
         player.Jump(force);
     }
