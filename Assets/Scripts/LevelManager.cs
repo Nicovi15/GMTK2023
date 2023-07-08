@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     int maxRessource = 0;
 
+    public Transform playerStartPosition;
+
     public List<CardData> LevelCards
     {
         get => levelCards;
