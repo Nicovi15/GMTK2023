@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class PauseBlock : MonoBehaviour, IInteractable
+public class PauseBlock : MonoBehaviour, IEffector, IInteractable
 {
     [SerializeField, Range(0f, 5f)] float pauseTimeInSeconds = 2.0f;
 
     Coroutine _pauseCoroutine;
     GameJamCharacter _currentPlayer;
     
-    public void Interact(in GameJamCharacter player)
+    public void ApplyEffectOn(in GameJamCharacter player)
     {
         _currentPlayer = player;
         _currentPlayer.Pause();
@@ -16,8 +16,13 @@ public class PauseBlock : MonoBehaviour, IInteractable
         _pauseCoroutine = StartCoroutine(ResumePlayer_Coroutine());
     }
 
+    public void Interact()
+    {
+        BreakTimer();
+    }
+
     // Break current timer
-    public void BreakPauseTimer()
+    public void BreakTimer()
     {
         if (_pauseCoroutine == null)
         {
@@ -26,13 +31,19 @@ public class PauseBlock : MonoBehaviour, IInteractable
         }
         
         StopCoroutine(_pauseCoroutine);
-        _currentPlayer.Resume();
+        ResumePlayer();
     }
 
     private IEnumerator ResumePlayer_Coroutine()
     {
         yield return new WaitForSeconds(pauseTimeInSeconds);
         
+        ResumePlayer();
+    }
+    
+    private void ResumePlayer()
+    {
         _currentPlayer.Resume();
+        Destroy(gameObject);
     }
 }

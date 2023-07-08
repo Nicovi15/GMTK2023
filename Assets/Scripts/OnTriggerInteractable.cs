@@ -8,10 +8,10 @@ public class OnTriggerInteractable : MonoBehaviour
     {
         if (col.TryGetComponent(out GameJamCharacter player))
         {
-            var interactables = GetComponents<IInteractable>();
-            foreach (var currentInteractable in interactables)
+            var effectors = GetComponents<IEffector>();
+            foreach (var effector in effectors)
             {
-                currentInteractable.Interact(player);
+                effector.ApplyEffectOn(player);
             }
         }
     }
