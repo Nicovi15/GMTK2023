@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Booster
   Cost: 1
-  Thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Thumbnail: {fileID: 21300000, guid: af52bd35ffaaa6846b77bf21a66359cb, type: 3}
   ProjectionPrefab: {fileID: 7905350725242972956, guid: c378644131045864781ddd034a5e7a14,
     type: 3}
   BrickPrefab: {fileID: 2045683054926009777, guid: c52de4cc4d83b094eb7d3c5e2959fe71,

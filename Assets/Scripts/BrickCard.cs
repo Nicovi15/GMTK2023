@@ -55,6 +55,7 @@ public class BrickCard : MonoBehaviour
         titleText.text = data.Title;
         thumbnailImage.sprite = data.Thumbnail;
         costText.text = data.Cost.ToString();
+        this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     public void HoldCard()

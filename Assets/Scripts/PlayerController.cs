@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,11 @@ public class PlayerController : MonoBehaviour
     public int Ressource
     {
         get => ressource;
-        set => ressource = value; 
+        set 
+        {
+           ressource = value;
+            GameInfos.Instance.UpdateRessourceText(ressource);
+        }
     }
     
     [Header("Grid Layermask")]
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private BrickCard selectedCard;
     private GameObject currentProjection;
 
+    public Action OnRessourceUpdate;
 
     private void Awake()
     {
@@ -67,7 +73,7 @@ public class PlayerController : MonoBehaviour
                     newBrick.transform.localScale = currentProjection.transform.localScale;
 
                     Destroy(currentProjection);
-                    ressource -= selectedCard.Data.Cost;
+                    Ressource -= selectedCard.Data.Cost;
                     Hand.Instance.UpdateCards();
                 }
                 

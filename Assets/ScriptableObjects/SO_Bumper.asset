@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: Bumper
   Cost: 1
-  Thumbnail: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Thumbnail: {fileID: 21300000, guid: 66153da2f9bbdf040bc0629e7edfbce9, type: 3}
   ProjectionPrefab: {fileID: 7905350725242972956, guid: c378644131045864781ddd034a5e7a14,
     type: 3}
   BrickPrefab: {fileID: 6243373077473382706, guid: ee890cf4346650941a046259e5fdd519,

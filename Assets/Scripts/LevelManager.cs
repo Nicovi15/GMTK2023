@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     int maxRessource = 0;
 
     public Transform playerStartPosition;
+    public FinalTarget finalTarget;
 
     public List<CardData> LevelCards
     {

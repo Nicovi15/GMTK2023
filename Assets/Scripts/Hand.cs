@@ -10,6 +10,9 @@ public class Hand : MonoBehaviour
         get => instance;
     }
 
+    public Vector2 CardDimension;
+    public Vector2 Offset;
+
     [SerializeField]
     GameObject brickCardPrefab;
 
@@ -25,9 +28,9 @@ public class Hand : MonoBehaviour
     }
     public void Initialize(List<CardData> cardDatas)
     {
-        rectTransform.sizeDelta = new Vector2(cardDatas.Count * (150.0f + 10.0f) + 20.0f, 250);
+        rectTransform.sizeDelta = new Vector2(cardDatas.Count * (CardDimension.x + Offset.x) + 2 * Offset.x, CardDimension.y + Offset.y);
 
-        float deltaX = 150.0f + 10.0f;
+        float deltaX = CardDimension.x + Offset.x;
         float initialX = cardDatas.Count % 2 == 0 ? -deltaX / 2 * (cardDatas.Count - 1) : -deltaX * (cardDatas.Count / 2);
 
         brickCards.Clear();
