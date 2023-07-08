@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class GameJamCharacter : MonoBehaviour
 {
-    public Vector3 baseDirection = new Vector3(0, 0, 1);
-    [Range(0f, 30f)] public float speed = 1f;
-    [Range(0f, 30f)] public float maxSpeed = 20f;
+    [SerializeField] Vector3 baseDirection = new(0, 0, 1);
+    [SerializeField] [Range(0f, 30f)] float speed = 1f;
+    [SerializeField] [Range(0f, 30f)] float maxSpeed = 20f;
     
     private Rigidbody rigidbody;
 

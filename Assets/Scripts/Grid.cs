@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Grid : MonoBehaviour
@@ -6,6 +5,7 @@ public class Grid : MonoBehaviour
     public static Grid Instance;
 
     public float cellSize = 5.0f;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -14,7 +14,8 @@ public class Grid : MonoBehaviour
 
     private void Start()
     {
-        // Debug.Log(GetGridCoordinate(new Vector3(-1.0f, -1.0f, -1.0f)));
+        // Debug.Log(GetGridCoordinate(new Vector3(-4.0f, -1.0f, -1.0f)));
+        // Debug.Log(GetGridCoordinate(new Vector3(-4.0f, 1.0f, 6.0f)));
     }
 
     public Vector2Int GetGridCoordinate(in Vector3 position)
@@ -27,13 +28,18 @@ public class Grid : MonoBehaviour
         var gridCoordinate = GetGridCoordinate(rawPosition);
 
         // Snap position to the center of grid
-        Vector3 halfCellOffset = new Vector3(cellSize, 0, cellSize) / 2.0f;
+        var halfOffset = GetHalfCellOffset();
         
-        return new Vector3(gridCoordinate.x, rawPosition.y, gridCoordinate.y) * cellSize + halfCellOffset;
+        // Signed in the same direction than the grid coordinate
+        var signedHalfOffset = new Vector3(halfOffset.x * Mathf.Sign(gridCoordinate.x), 
+                                            0f,
+                                            halfOffset.z * Mathf.Sign(gridCoordinate.y));
+        
+        return new Vector3(gridCoordinate.x, rawPosition.y, gridCoordinate.y) * cellSize + signedHalfOffset;
     }
 
     public Vector3 GetHalfCellOffset()
     {
-        return new Vector3(cellSize, 0, cellSize) / 2.0f;
+        return new Vector3(cellSize, 0f, cellSize) / 2.0f;
     }
 }
