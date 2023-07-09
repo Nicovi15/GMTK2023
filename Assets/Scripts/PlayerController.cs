@@ -26,9 +26,11 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    [Header("Grid Layermask")]
+    [Header("Layermasks")]
     [SerializeField]
     private LayerMask GridLayer;
+    [SerializeField]
+    private LayerMask InteractableLayer;
     private bool isHolding;
     public int ressource = 0;
     private BrickCard selectedCard;
@@ -79,6 +81,18 @@ public class PlayerController : MonoBehaviour
                 
                 selectedCard = null;
                 isHolding = false;
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitData;
+                if (Physics.Raycast(ray, out hitData, 1000, InteractableLayer))
+                {
+                    hitData.collider.gameObject.GetComponent<IInteractable>().Interact();
+                }
             }
         }
     }

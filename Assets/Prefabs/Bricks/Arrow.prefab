@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6056377664931579107}
   - component: {fileID: 6727747243470937979}
   - component: {fileID: 8927603180051826737}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2482485290092602285}
   - component: {fileID: 5758164100269636123}
   - component: {fileID: 549502170755347250}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2539350774321621358}
   - component: {fileID: 2604429394827229244}
   - component: {fileID: 8615041117513391955}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ Transform:
   m_Children:
   - {fileID: 8135813952897205431}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2539350774321621358
 BoxCollider:
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ab18c32b059e84b912e73e66f8b3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationStep: {x: 0, y: 90, z: 0}
 --- !u!1 &5594792141990146035
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +258,7 @@ GameObject:
   - component: {fileID: 7227992457717005495}
   - component: {fileID: 7943184989853615379}
   - component: {fileID: 8584349075731730867}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -340,7 +341,7 @@ GameObject:
   - component: {fileID: 8135813952897205431}
   - component: {fileID: 739568689190263339}
   - component: {fileID: 7728785558025990616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7030072527867175144}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

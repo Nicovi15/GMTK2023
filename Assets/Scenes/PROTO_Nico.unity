@@ -2428,6 +2428,9 @@ MonoBehaviour:
   GridLayer:
     serializedVersion: 2
     m_Bits: 8
+  InteractableLayer:
+    serializedVersion: 2
+    m_Bits: 64
   ressource: 0
 --- !u!4 &1900619184
 Transform:
