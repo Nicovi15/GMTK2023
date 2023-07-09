@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using WSWhitehouse.TagSelector;
 
@@ -11,15 +12,20 @@ public class GameJamCharacter : MonoBehaviour
     [SerializeField] Animator animator;
 
     [Header("Jump")]
-    [SerializeField, TagSelector] string groundTag;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] Transform footTransform;
     [SerializeField, Range(0f, 1f)] float groundCheckRadius = 0.1f;
+    
+    [Header("Death")]
+    [SerializeField, TagSelector] string groundTag = "Ground";
+    [SerializeField] RagdollController ragdollController;
+    [SerializeField, Range(0f, 3f)] float deathTimeInSeconds = 2.0f;
     
     public Action onDeath;
 
     Transform _transform;
     Rigidbody _rigidbody;
+    Collider _collider;
     Vector3 _direction = new(0f, 0f, 1f);
 
     float _baseSpeed;
@@ -29,11 +35,16 @@ public class GameJamCharacter : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
         _transform = GetComponent<Transform>();
         ChangeDirection(_transform.forward);
     }
 
-    private void Start() => _baseSpeed = speed;
+    private void Start()
+    {
+        _baseSpeed = speed;
+        ragdollController.Disable();
+    }
 
     private void Update()
     {
@@ -98,8 +109,13 @@ public class GameJamCharacter : MonoBehaviour
     {
         Pause();
 
-        onDeath?.Invoke();
-        Debug.Log("Player Is Dead !");
+        // Disable main collider / rigidbody to be replace by ragdoll physics
+        _rigidbody.useGravity = false;
+        _collider.enabled = false;
+        animator.enabled = false;
+        ragdollController.Enable();
+
+        StartCoroutine(InvokeOnDeath_Coroutine());
     }
 
     private void Move()
@@ -121,5 +137,13 @@ public class GameJamCharacter : MonoBehaviour
     private bool IsCurrentlyGrounded()
     {
         return Physics.CheckSphere(footTransform.position, groundCheckRadius, groundLayer);
+    }
+
+    private IEnumerator InvokeOnDeath_Coroutine()
+    {
+        yield return new WaitForSeconds(deathTimeInSeconds);
+
+        onDeath?.Invoke();
+        Debug.Log("Player is dead !");
     }
 }
