@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     LevelManager currentLevel;
 
     [SerializeField]
+    GameObject endScreen;
+
+    [SerializeField]
     GameObject playerPrefab;
 
     GameJamCharacter currentPlayer;
@@ -149,6 +152,8 @@ public class GameManager : MonoBehaviour
         if(levelIndex == Levels.Count)
         {
             Debug.Log("Fin du jeu");
+            yield return new WaitForSeconds(1.0f);
+            endScreen.SetActive(true);
         }
         else
         {
@@ -195,9 +200,10 @@ public class GameManager : MonoBehaviour
             menu.ChangeHideColor(FinalColor);
             StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, FinalColor));
         }
-
-
     }
 
-
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
