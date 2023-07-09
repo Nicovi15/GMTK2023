@@ -63,7 +63,7 @@ public class GameJamCharacter : MonoBehaviour
         Death();
     }
 
-    private void Death()
+    public void Death()
     {
         Pause();
 
