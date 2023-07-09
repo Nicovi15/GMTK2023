@@ -30,6 +30,8 @@ public class GameJamCharacter : MonoBehaviour
 
     float _baseSpeed;
     bool _bGrounded;
+    bool _bDead;
+    
     private static readonly int BJump = Animator.StringToHash("bJump");
 
     private void Awake()
@@ -43,7 +45,9 @@ public class GameJamCharacter : MonoBehaviour
     private void Start()
     {
         _baseSpeed = speed;
+        ragdollController.Initialize();
         ragdollController.Disable();
+        _collider.enabled = true;
     }
 
     private void Update()
@@ -68,6 +72,8 @@ public class GameJamCharacter : MonoBehaviour
         // or normally
         if (col.gameObject.CompareTag(groundTag))
             return;
+        
+        Debug.Log("Player hit by " + col.gameObject.name);
         
         Death();
     }
@@ -107,7 +113,12 @@ public class GameJamCharacter : MonoBehaviour
 
     public void Death()
     {
+        if (_bDead)
+            return;
+
         Pause();
+
+        _bDead = true;
 
         // Disable main collider / rigidbody to be replace by ragdoll physics
         _rigidbody.useGravity = false;

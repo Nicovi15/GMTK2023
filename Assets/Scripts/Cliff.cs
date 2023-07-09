@@ -7,6 +7,8 @@ public class Cliff : MonoBehaviour
     {
         if (col.TryGetComponent(out GameJamCharacter jamCharacter))
         {
+            Debug.Log("Player hit by " + col.gameObject.name);
+
             jamCharacter.Death();
         }
     }
