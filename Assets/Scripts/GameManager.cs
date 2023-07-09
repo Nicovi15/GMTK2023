@@ -201,6 +201,29 @@ public class GameManager : MonoBehaviour
             menu.ChangeHideColor(FinalColor);
             StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, FinalColor));
         }
+
+        StartCoroutine(LookFinish());
+
+    }
+
+    IEnumerator LookFinish()
+    {
+        Vector3 direction = currentPlayer.transform.position - GameCamera.transform.position;
+        Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+        Quaternion initialRotation = GameCamera.transform.rotation;
+        float initialSize = GameCamera.orthographicSize;
+        float speed = 2.0f;
+        float t = 0;
+        while(t < 1)
+        {
+            GameCamera.transform.rotation = Quaternion.Lerp(initialRotation, toRotation, t);
+            GameCamera.orthographicSize = Mathf.Lerp(initialSize, 2.0f, t);
+            yield return null;
+            t += Time.deltaTime * speed;
+        }
+
+        GameCamera.transform.rotation = Quaternion.Lerp(GameCamera.transform.rotation, toRotation, 1.0f);
+        GameCamera.orthographicSize = 2.0f;
     }
 
     public void RestartScene()
