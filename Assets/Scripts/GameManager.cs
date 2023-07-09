@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 [Serializable]
 public class LevelDescription
 {
@@ -20,6 +21,10 @@ public class GameManager : MonoBehaviour
     public LevelComplete LevelCompleteHUD;
 
     public Menu menu;
+
+    public Camera GameCamera;
+
+    public Color FinalColor;
 
     LevelManager currentLevel;
 
@@ -60,6 +65,8 @@ public class GameManager : MonoBehaviour
         menu.HidePanel.SetActive(true);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Levels[levelIndex].Name, LoadSceneMode.Additive);
 
+        yield return new WaitForSeconds(0.1f);
+
         while (!asyncLoad.isDone)
         {
             yield return null;
@@ -68,7 +75,17 @@ public class GameManager : MonoBehaviour
         currentLevel = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         Hand.Instance.Initialize(currentLevel.LevelCards);
         currentLevel.finalTarget.OnReachTarget += OnLevelComplete;
+        currentLevel.LevelCamera.gameObject.SetActive(false);
+        GameCamera.transform.position = currentLevel.LevelCamera.transform.position;
+        GameCamera.transform.rotation = currentLevel.LevelCamera.transform.rotation;
+        GameCamera.backgroundColor = currentLevel.LevelCamera.backgroundColor;
+        GameCamera.orthographicSize = currentLevel.LevelCamera.orthographicSize;
+
+        StartCoroutine(menu.FadeOutHide(0.9f));
+        yield return new WaitForSeconds(1f);
+
         menu.HidePanel.SetActive(false);
+
         StartLevel();
     }
 
@@ -110,6 +127,8 @@ public class GameManager : MonoBehaviour
 
     void UnloadPreviousLevel()
     {
+        menu.HidePanel.SetActive(true);
+
         if (currentPlayer != null)
         {
             Destroy(currentPlayer.gameObject);
@@ -166,7 +185,17 @@ public class GameManager : MonoBehaviour
             StopCoroutine(chronoRoutine);
 
         LevelCompleteHUD.gameObject.SetActive(true);
-        StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, new Color()));
+        if(levelIndex != Levels.Count - 1)
+        {
+            menu.ChangeHideColor(Levels[levelIndex + 1].Color);
+            StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, Levels[levelIndex + 1].Color));
+        }
+        else
+        {
+            menu.ChangeHideColor(FinalColor);
+            StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, FinalColor));
+        }
+
 
     }
 

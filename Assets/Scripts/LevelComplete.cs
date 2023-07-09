@@ -40,6 +40,8 @@ public class LevelComplete : MonoBehaviour
 
     public IEnumerator ShowLevelComplete(int time, int death, Color color)
     {
+        BorderBot.color = color;
+        BorderTop.color = color;
         BorderBot.gameObject.SetActive(true);
         BorderTop.gameObject.SetActive(true);
         title.gameObject.SetActive(true);
