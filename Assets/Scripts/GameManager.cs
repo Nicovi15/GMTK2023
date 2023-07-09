@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
             Destroy(currentPlayer.gameObject);
             currentPlayer = null;
         }
+        PlayerController.Instance.ClearGrid();
         StartCoroutine(UnloadPreviousLevelRoutine());
     }
 
