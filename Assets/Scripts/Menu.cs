@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class Menu : MonoBehaviour
 
     [SerializeField]
     public GameObject HidePanel;
+
+    [SerializeField]
+    public Image ImageHidePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -49,5 +53,23 @@ public class Menu : MonoBehaviour
         GameManager.Instance.StartLoadLevel();
     }
 
+    public void ChangeHideColor(Color color)
+    {
+        ImageHidePanel.color = color;
+    }
+
+    public IEnumerator FadeOutHide(float duration)
+    {
+        ImageHidePanel.color = new Color(ImageHidePanel.color.r, ImageHidePanel.color.g, ImageHidePanel.color.b, 1.0f);
+        yield return null;
+        float t = 0;
+        while(t < duration)
+        {
+            ImageHidePanel.color = new Color(ImageHidePanel.color.r, ImageHidePanel.color.g, ImageHidePanel.color.b, 1 - (t / duration));
+            t += Time.deltaTime;
+            yield return null;
+        }
+        ImageHidePanel.color = new Color(ImageHidePanel.color.r, ImageHidePanel.color.g, ImageHidePanel.color.b, 0.0f);
+    }
 
 }

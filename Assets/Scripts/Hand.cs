@@ -33,6 +33,13 @@ public class Hand : MonoBehaviour
         float deltaX = CardDimension.x + Offset.x;
         float initialX = cardDatas.Count % 2 == 0 ? -deltaX / 2 * (cardDatas.Count - 1) : -deltaX * (cardDatas.Count / 2);
 
+        if(brickCards.Count > 0)
+        {
+            foreach(var bc in brickCards)
+            {
+                Destroy(bc.gameObject);
+            }
+        }
         brickCards.Clear();
 
         for (int i = 0; i < cardDatas.Count; i++)

@@ -3,15 +3,19 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Cards")]
     [SerializeField]
     List<CardData> levelCards = new List<CardData>();
 
     [SerializeField]
     int maxRessource = 0;
 
+    [Header("Objectives")]
     public Transform playerStartPosition;
     public FinalTarget finalTarget;
 
+    [Header("Camera settings")]
+    public Camera LevelCamera;
     public Color backgroundColor;
 
     public List<CardData> LevelCards
