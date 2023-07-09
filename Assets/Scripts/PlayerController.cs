@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,6 +55,19 @@ public class PlayerController : MonoBehaviour
             RaycastHit hitData;
             if (Physics.Raycast(ray, out hitData, 1000, GridLayer))
             {
+                if (currentProjection == null)
+                {
+                    currentProjection = Instantiate(selectedCard.Data.BrickPrefab);
+                    var projectionEffect = currentProjection.GetComponent<IProjectionEffect>();
+                    if (projectionEffect != null)
+                    {
+                        projectionEffect.ShowHighlight();
+                    }
+
+                    // Disable collider on the projection object to keep the player unaffected
+                    var projectionCollider = currentProjection.GetComponent<Collider>();
+                    projectionCollider.enabled = false;
+                }
                 currentPosInGrid = Grid.Instance.GetGridCoordinate(hitData.point);
                 if (!bricksOnGrid.ContainsKey(currentPosInGrid))
                 {
@@ -108,7 +120,11 @@ public class PlayerController : MonoBehaviour
                 RaycastHit hitData;
                 if (Physics.Raycast(ray, out hitData, 1000, InteractableLayer))
                 {
-                    hitData.collider.gameObject.GetComponent<IInteractable>().Interact();
+                    var interactables = hitData.collider.gameObject.GetComponents<IInteractable>();
+                    foreach (var currentInteractable in interactables)
+                    {
+                        currentInteractable.Interact();
+                    }
                 }
             }
         }

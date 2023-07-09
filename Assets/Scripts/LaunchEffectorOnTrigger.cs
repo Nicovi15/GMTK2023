@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Trigger all IInteractable attached to the current game object
-public class OnTriggerInteractable : MonoBehaviour
+public class LaunchEffectorOnTrigger : MonoBehaviour
 {
     // Split activation / collision management and real interaction
     private void OnTriggerEnter(Collider col)

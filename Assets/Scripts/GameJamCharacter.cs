@@ -10,21 +10,19 @@ public class GameJamCharacter : MonoBehaviour
     [SerializeField] [Range(0f, 30f)] float maxSpeed = 20f;
     [SerializeField, TagSelector] private string groundTag;
     
-    public Action OnDeath;
+    public Action onDeath;
 
-    private Rigidbody rigidbody;
-    // private Collider[] _colliders;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        // _colliders = GetComponents<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
         // Constant movement without ignoring gravity force
-        rigidbody.velocity = baseDirection.normalized * speed + new Vector3(0f, rigidbody.velocity.y, 0f);
+        _rigidbody.velocity = baseDirection.normalized * speed + Vector3.up * _rigidbody.velocity.y;
     }
 
     public void ChangeDirection(in Vector3 newDirection)
@@ -40,25 +38,19 @@ public class GameJamCharacter : MonoBehaviour
 
     public void Jump(float jumpForce)
     {
-        rigidbody.AddForce(new Vector3(0f, jumpForce, 0f), ForceMode.Impulse);
+        _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     public void Pause()
     {
-        rigidbody.angularVelocity = Vector3.zero;
-        rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
         enabled = false;
-
-        // foreach (var currentCollider in _colliders)
-        //     currentCollider.enabled = false;
     }
 
     public void Resume()
     {
         enabled = true;
-
-        // foreach (var currentCollider in _colliders)
-        //     currentCollider.enabled = true;
     }
 
     private void OnCollisionEnter(Collision col)
@@ -75,7 +67,7 @@ public class GameJamCharacter : MonoBehaviour
     {
         Pause();
 
-        OnDeath?.Invoke();
+        onDeath?.Invoke();
         Debug.Log("Player Is Dead !");
     }
 }

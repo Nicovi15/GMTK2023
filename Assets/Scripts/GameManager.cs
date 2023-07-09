@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         PlayerController.Instance.ClearGrid();
         Hand.Instance.UpdateCards();
 
-        // Il faudra clean le dictionnaire et supprimer toutes les bricks déjà placées
+        // Il faudra clean le dictionnaire et supprimer toutes les bricks dï¿½jï¿½ placï¿½es
 
         if(currentPlayer != null)
         {
@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 
         currentPlayer = Instantiate(playerPrefab, currentLevel.playerStartPosition.position, currentLevel.playerStartPosition.rotation).GetComponent<GameJamCharacter>();
         currentPlayer.Pause();
-        currentPlayer.OnDeath += Restart;
+        currentPlayer.onDeath += Restart;
 
         yield return new WaitForSeconds(0.1f);
 
