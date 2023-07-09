@@ -8,9 +8,14 @@ public class GameJamCharacter : MonoBehaviour
     [SerializeField, Range(0f, 30f)] float speed = 1f;
     [SerializeField, Range(0f, 30f)] float maxSpeed = 20f;
     [SerializeField, Range(0f, 700f)] float rotationSpeed = 20f;
-    [SerializeField, TagSelector] string groundTag;
     [SerializeField] Animator animator;
 
+    [Header("Jump")]
+    [SerializeField, TagSelector] string groundTag;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] Transform footTransform;
+    [SerializeField, Range(0f, 1f)] float groundCheckRadius = 0.1f;
+    
     public Action onDeath;
 
     Transform _transform;
@@ -18,7 +23,9 @@ public class GameJamCharacter : MonoBehaviour
     Vector3 _direction = new(0f, 0f, 1f);
 
     float _baseSpeed;
-    
+    bool _bGrounded;
+    private static readonly int BJump = Animator.StringToHash("bJump");
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -28,7 +35,19 @@ public class GameJamCharacter : MonoBehaviour
 
     private void Start() => _baseSpeed = speed;
 
-    private void Update() => SmoothRotateToDirection();
+    private void Update()
+    {
+        // Change animation only when the player takes off or land
+        if (_bGrounded != IsCurrentlyGrounded())
+        {
+            _bGrounded = !_bGrounded;
+            
+            // Jump only when the player isn't grounded
+            animator.SetBool(BJump, !_bGrounded);
+        }
+        
+        SmoothRotateToDirection();
+    }
 
     private void FixedUpdate() => Move();
 
@@ -97,5 +116,10 @@ public class GameJamCharacter : MonoBehaviour
         
         // Smooth rotation with an interpolation value
         _transform.rotation = Quaternion.RotateTowards(_transform.rotation, directionRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private bool IsCurrentlyGrounded()
+    {
+        return Physics.CheckSphere(footTransform.position, groundCheckRadius, groundLayer);
     }
 }
