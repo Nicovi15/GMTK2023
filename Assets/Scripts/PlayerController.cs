@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
 
     public Action OnRessourceUpdate;
 
+    Dictionary<Vector2Int, GameObject> bricksOnGrid = new Dictionary<Vector2Int, GameObject>();
+
+    private Vector2Int currentPosInGrid;
+
     private void Awake()
     {
         if (instance == null)
@@ -52,10 +56,22 @@ public class PlayerController : MonoBehaviour
             RaycastHit hitData;
             if (Physics.Raycast(ray, out hitData, 1000, GridLayer))
             {
-                if (currentProjection == null)
-                    currentProjection = Instantiate(selectedCard.Data.ProjectionPrefab);
+                currentPosInGrid = Grid.Instance.GetGridCoordinate(hitData.point);
+                if (!bricksOnGrid.ContainsKey(currentPosInGrid))
+                {
+                    if (currentProjection == null)
+                        currentProjection = Instantiate(selectedCard.Data.ProjectionPrefab);
 
-                currentProjection.transform.position = Grid.Instance.GetSnapPosition(hitData.point);
+                    currentProjection.transform.position = Grid.Instance.GetSnapPosition(hitData.point);
+                }
+                else
+                {
+                    if (currentProjection != null)
+                    {
+                        Destroy(currentProjection);
+                        currentProjection = null;
+                    }
+                }
             }
             else
             {
@@ -67,12 +83,13 @@ public class PlayerController : MonoBehaviour
             {
                 selectedCard.SelectCard(false);
 
-                if (currentProjection != null)
+                if (currentProjection != null && !bricksOnGrid.ContainsKey(currentPosInGrid))
                 {
                     GameObject newBrick = Instantiate(selectedCard.Data.BrickPrefab);
                     newBrick.transform.position = currentProjection.transform.position;
                     newBrick.transform.rotation = currentProjection.transform.rotation;
                     newBrick.transform.localScale = currentProjection.transform.localScale;
+                    bricksOnGrid.Add(currentPosInGrid, newBrick);
 
                     Destroy(currentProjection);
                     Ressource -= selectedCard.Data.Cost;
@@ -101,6 +118,16 @@ public class PlayerController : MonoBehaviour
     {
         isHolding = true;
         selectedCard = card;
+    }
+
+    public void ClearGrid()
+    {
+        foreach(var brick in bricksOnGrid)
+        {
+            Destroy(brick.Value);
+        }
+
+        bricksOnGrid.Clear();
     }
 
 }

@@ -11,6 +11,9 @@ public class Menu : MonoBehaviour
     [SerializeField]
     float countDownSpeed = 1.0f;
 
+    [SerializeField]
+    public GameObject HidePanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +45,8 @@ public class Menu : MonoBehaviour
                 yield return null;
             }
         }
-        this.gameObject.SetActive(false);
-        GameManager.Instance.StartLevel();
+        countDownText.gameObject.SetActive(false);
+        GameManager.Instance.StartLoadLevel();
     }
 
 

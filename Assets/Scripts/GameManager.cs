@@ -1,7 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+[Serializable]
+public class LevelDescription
+{
+    public string Name;
+    public Color Color;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +17,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => instance;
     public LevelManager CurrentLevel => currentLevel;
 
-    public GameObject LevelCompleteHUD;
+    public LevelComplete LevelCompleteHUD;
+
+    public Menu menu;
 
     LevelManager currentLevel;
 
@@ -23,20 +33,32 @@ public class GameManager : MonoBehaviour
 
     Coroutine chronoRoutine;
 
+    public List<LevelDescription> Levels = new List<LevelDescription>();
+
+    public int levelIndex = 0;
+
     private void Awake()
     {
         if (instance == null)
             instance = this;
+
+        LevelCompleteHUD.OnEndLevelComplete += UnloadPreviousLevel;
     }
 
     void Start()
     {
-        StartCoroutine(LoadLevel("TestLevel"));
+        //StartCoroutine(LoadLevel());
     }
 
-    IEnumerator LoadLevel(string LevelName)
+    public void StartLoadLevel()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LevelName, LoadSceneMode.Additive);
+        StartCoroutine(LoadLevel());
+    }
+
+    IEnumerator LoadLevel()
+    {
+        menu.HidePanel.SetActive(true);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(Levels[levelIndex].Name, LoadSceneMode.Additive);
 
         while (!asyncLoad.isDone)
         {
@@ -46,6 +68,8 @@ public class GameManager : MonoBehaviour
         currentLevel = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         Hand.Instance.Initialize(currentLevel.LevelCards);
         currentLevel.finalTarget.OnReachTarget += OnLevelComplete;
+        menu.HidePanel.SetActive(false);
+        StartLevel();
     }
 
     public void StartLevel()
@@ -62,6 +86,7 @@ public class GameManager : MonoBehaviour
         GameInfos.Instance.UpdateDeathText(deathNumber);
 
         PlayerController.Instance.Ressource = currentLevel.MaxRessource;
+        PlayerController.Instance.ClearGrid();
         Hand.Instance.UpdateCards();
 
         // Il faudra clean le dictionnaire et supprimer toutes les bricks déjà placées
@@ -80,6 +105,36 @@ public class GameManager : MonoBehaviour
 
         currentPlayer.Resume();
         chronoRoutine = StartCoroutine(StartChrono());
+
+    }
+
+    void UnloadPreviousLevel()
+    {
+        if (currentPlayer != null)
+        {
+            Destroy(currentPlayer.gameObject);
+            currentPlayer = null;
+        }
+        StartCoroutine(UnloadPreviousLevelRoutine());
+    }
+
+    IEnumerator UnloadPreviousLevelRoutine()
+    {
+        AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(Levels[levelIndex].Name);
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+
+        levelIndex++;
+        if(levelIndex == Levels.Count)
+        {
+            Debug.Log("Fin du jeu");
+        }
+        else
+        {
+            StartCoroutine(LoadLevel());
+        }
 
     }
 
@@ -107,20 +162,13 @@ public class GameManager : MonoBehaviour
 
     public void OnLevelComplete()
     {
-        StartCoroutine(LevelCompletedRoutine());
-    }
-
-    IEnumerator LevelCompletedRoutine()
-    {
         if (chronoRoutine != null)
             StopCoroutine(chronoRoutine);
 
-        // Charger prochain niveau en asynchrone
-        LevelCompleteHUD.SetActive(true);
+        LevelCompleteHUD.gameObject.SetActive(true);
+        StartCoroutine(LevelCompleteHUD.ShowLevelComplete((int)chrono, deathNumber, new Color()));
 
-        yield return new WaitForSeconds(3.0f);
-
-        Debug.Log("Next level");
     }
+
 
 }
