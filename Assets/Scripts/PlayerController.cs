@@ -55,25 +55,14 @@ public class PlayerController : MonoBehaviour
             RaycastHit hitData;
             if (Physics.Raycast(ray, out hitData, 1000, GridLayer))
             {
-                if (currentProjection == null)
-                {
-                    currentProjection = Instantiate(selectedCard.Data.BrickPrefab);
-                    var projectionEffect = currentProjection.GetComponent<IProjectionEffect>();
-                    if (projectionEffect != null)
-                    {
-                        projectionEffect.ShowHighlight();
-                    }
-
-                    // Disable collider on the projection object to keep the player unaffected
-                    var projectionCollider = currentProjection.GetComponent<Collider>();
-                    projectionCollider.enabled = false;
-                }
                 currentPosInGrid = Grid.Instance.GetGridCoordinate(hitData.point);
                 if (!bricksOnGrid.ContainsKey(currentPosInGrid))
                 {
-                    if (currentProjection == null)
-                        currentProjection = Instantiate(selectedCard.Data.ProjectionPrefab);
-
+                    if (!currentProjection)
+                    {
+                        InitializeProjection();
+                    }
+                    
                     currentProjection.transform.position = Grid.Instance.GetSnapPosition(hitData.point);
                 }
                 else
@@ -118,7 +107,8 @@ public class PlayerController : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitData;
-                if (Physics.Raycast(ray, out hitData, 1000, InteractableLayer))
+                
+                if (Physics.Raycast(ray, out hitData, 1000, InteractableLayer, QueryTriggerInteraction.Collide))
                 {
                     var interactables = hitData.collider.gameObject.GetComponents<IInteractable>();
                     foreach (var currentInteractable in interactables)
@@ -128,6 +118,20 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void InitializeProjection()
+    {
+        currentProjection = Instantiate(selectedCard.Data.BrickPrefab);
+        var projectionEffect = currentProjection.GetComponent<IProjectionEffect>();
+        if (projectionEffect != null)
+        {
+            projectionEffect.ShowHighlight();
+        }
+
+        // Disable collider on the projection object to keep the player unaffected
+        var projectionCollider = currentProjection.GetComponent<Collider>();
+        projectionCollider.enabled = false;
     }
 
     public void HoldCard(BrickCard card)
