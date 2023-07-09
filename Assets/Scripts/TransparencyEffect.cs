@@ -8,10 +8,10 @@ public class TransparencyEffect : MonoBehaviour, IProjectionEffect
 
     private void Awake() => _meshRenderers = GetComponentsInChildren<MeshRenderer>();
 
-    private void Start()
-    {
-        ShowHighlight();
-    }
+    // private void Start()
+    // {
+    //     ShowHighlight();
+    // }
 
     public void ShowHighlight()
     {
