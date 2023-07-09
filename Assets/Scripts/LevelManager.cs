@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
 
     [Header("Camera settings")]
     public Camera LevelCamera;
-    public Color backgroundColor;
 
     public List<CardData> LevelCards
     {
