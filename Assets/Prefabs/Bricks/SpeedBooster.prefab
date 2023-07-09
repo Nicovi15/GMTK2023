@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4828662444095208005}
   - component: {fileID: 6339970709489039341}
   - component: {fileID: 9026429903828760188}
+  - component: {fileID: 4903765590411397831}
   m_Layer: 0
   m_Name: SpeedBooster
   m_TagString: Untagged
@@ -81,6 +82,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addedSpeed: 5
+--- !u!114 &4903765590411397831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045683054926009777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3f00b73c7e8414ca554efbc7221e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightedOpacity: 0.1
 --- !u!1 &2812804330476003191
 GameObject:
   m_ObjectHideFlags: 0
