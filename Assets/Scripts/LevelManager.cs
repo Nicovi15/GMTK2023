@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
     public Transform playerStartPosition;
     public FinalTarget finalTarget;
 
+    public Color backgroundColor;
+
     public List<CardData> LevelCards
     {
         get => levelCards;
