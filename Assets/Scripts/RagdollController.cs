@@ -6,7 +6,7 @@ public class RagdollController : MonoBehaviour
     Rigidbody[] _rigidbodies;
     CharacterJoint[] _characterJoints;
 
-    private void Awake()
+    public void Initialize()
     {
         _colliders = GetComponentsInChildren<Collider>();
         _rigidbodies = GetComponentsInChildren<Rigidbody>();
@@ -19,10 +19,16 @@ public class RagdollController : MonoBehaviour
 
     private void ChangeRagdollState(bool state)
     {
-        foreach (var currentCollider in _colliders)
-            currentCollider.enabled = state;
-        
-        foreach (var currentRigidbody in _rigidbodies)
-            currentRigidbody.isKinematic = !state;
+        if (_colliders != null)
+        {
+            foreach (var currentCollider in _colliders)
+                currentCollider.enabled = state;
+        }
+
+        if (_rigidbodies != null)
+        {
+            foreach (var currentRigidbody in _rigidbodies)
+                currentRigidbody.isKinematic = !state;
+        }
     }
 }
