@@ -17,6 +17,7 @@ public class GameJamCharacter : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        ChangeDirection(transform.forward);
     }
 
     private void FixedUpdate()
