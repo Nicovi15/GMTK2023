@@ -3,7 +3,12 @@ guid: 164232416e6267c40b9d023ac6c41c58
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: striping
+    second: {fileID: 2100000, guid: d79d31c71c2d2854e94b289365dbb455, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

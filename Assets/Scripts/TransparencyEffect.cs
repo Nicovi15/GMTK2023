@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class TransparencyEffect : MonoBehaviour, IProjectionEffect
 {
-    [SerializeField, Range(0f, 1f)] float highlightedOpacity = 0.7f;
+    [SerializeField, Range(0f, 1f)] float highlightedOpacity = 0.4f;
     
     MeshRenderer[] _meshRenderers;
-    
-    private static readonly int Surface = Shader.PropertyToID("_Surface");
 
     private void Awake() => _meshRenderers = GetComponentsInChildren<MeshRenderer>();
+
+    private void Start()
+    {
+        ShowHighlight();
+    }
 
     public void ShowHighlight()
     {
@@ -16,7 +19,7 @@ public class TransparencyEffect : MonoBehaviour, IProjectionEffect
         {
             foreach (var material in meshRenderer.materials)
             {
-                material.SetFloat(Surface, 1f);
+                material.SetFloat("_Surface", 1f);
                 material.color = new Color( material.color.r, 
                                             material.color.g, 
                                             material.color.b, 
