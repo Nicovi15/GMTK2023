@@ -1,14 +1,9 @@
 using UnityEngine;
 
-// Change player direction based on the forward vector of the current object
-public class Arrow : MonoBehaviour, IEffector, IInteractable
+public class Arrow : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Vector3 rotationStep = new Vector3(0f, 90f, 0f);
-
-    public void ApplyEffectOn(in GameJamCharacter player)
-    {
-        player.ChangeDirection(transform.forward);
-    }
+    [SerializeField] Transform _father;
+    [SerializeField] Vector3 rotationStep = new Vector3(0f, 90f, 0f);
 
     public void Interact()
     {
@@ -17,6 +12,6 @@ public class Arrow : MonoBehaviour, IEffector, IInteractable
 
     private void Rotate()
     {
-        transform.rotation *= Quaternion.Euler(rotationStep);
+        _father.rotation *= Quaternion.Euler(rotationStep);
     }
 }
