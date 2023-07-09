@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,11 +31,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        LoadLevel();
+        StartCoroutine(LoadLevel("TestLevel"));
     }
 
-    void LoadLevel()
+    IEnumerator LoadLevel(string LevelName)
     {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(LevelName, LoadSceneMode.Additive);
+
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
         currentLevel = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         Hand.Instance.Initialize(currentLevel.LevelCards);
         currentLevel.finalTarget.OnReachTarget += OnLevelComplete;
