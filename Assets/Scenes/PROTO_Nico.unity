@@ -3068,6 +3068,8 @@ MonoBehaviour:
     Color: {r: 0.7568628, g: 0.7725491, b: 0.8000001, a: 1}
   - Name: level3
     Color: {r: 0.6, g: 0.5372549, b: 0.36862746, a: 1}
+  - Name: level4
+    Color: {r: 0.6, g: 0.5372549, b: 0.36862746, a: 1}
   - Name: level5
     Color: {r: 0.6, g: 0.5372549, b: 0.36862746, a: 1}
   levelIndex: 0
