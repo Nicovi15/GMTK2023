@@ -8,7 +8,7 @@ public class GameJamCharacter : MonoBehaviour
     [Header("Movement")]
     [SerializeField, Range(0f, 30f)] float speed = 1f;
     [SerializeField, Range(0f, 30f)] float maxSpeed = 20f;
-    [SerializeField, Range(0f, 700f)] float rotationSpeed = 20f;
+    [SerializeField, Range(0f, 1000f)] float rotationSpeed = 20f;
     [SerializeField] Animator animator;
 
     [Header("Jump")]
