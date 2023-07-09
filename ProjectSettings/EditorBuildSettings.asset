@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/PROTO_Nico.unity
     guid: c0058df490730fb4f8f543d3f0de5c21
   - enabled: 1
-    path: Assets/Scenes/TestLevel.unity
-    guid: 92910902b89f259499cf7a4753dbfc34
-  - enabled: 1
     path: Assets/Scenes/level1.unity
     guid: cf1a8a5275a1d374fa8ea5e2583ba68a
   - enabled: 1
